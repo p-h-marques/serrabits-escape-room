@@ -7,6 +7,9 @@ participant "Backend" as be
 database "Banco de dados" as db
 
 user->fe: Entra na aplicação
+
+note over fe:Tela de boas vindas
+
 fe->ls: Gera/recupera um ID único
 
 note over ls:[escape-room-user-id]
@@ -27,6 +30,7 @@ end
 
 be->fe:Retorna usuário e etapa atual
 fe->user: Redireciona para step corrente
+note over fe,user:Tela de desafio
 
 user->fe:Resposta é submetida
 fe->be:Valida resposta do step\n(userId, step, answer)
@@ -44,8 +48,15 @@ end
 alt Resposta incorreta
   be->fe:Retorna erro
   fe->user:Feedback ao usuário
-else Resposta correta
+  note over fe,user:Modal de insucesso
+else Resposta correta, ainda há etapas
   note over be: Atualiza step do usuário
   be->fe:Retorna nova entidade **user**
-  fe->user:Próxima etapa ou\nfeedback de sucesso final
+  fe->user:Próxima etapa
+  note over fe,user:Modal de sucesso, com CTA\npara próxima etapa
+else Resposta correta, usuário escapou
+  note over be: Atualiza step do usuário
+  be->fe:Retorna nova entidade **user**
+  fe->user:Exibe tela de sucesso
+  note over fe,user:Tela de sucesso
 end
