@@ -1,0 +1,51 @@
+title Escape Room
+
+actor "Usuário" as user
+participant "Frontend" as fe
+participant "Local Storage" as ls
+participant "Backend" as be
+database "Banco de dados" as db
+
+user->fe: Entra na aplicação
+fe->ls: Gera/recupera um ID único
+
+note over ls:[escape-room-user-id]
+
+fe->be: Requisita etapa em que o usuário está
+
+group Obtendo usuário via BE
+  note over be:[user] Get/Register User by ID
+
+  note right of be:Cria entidade USER (id,step),\ncaso usuário inexistente
+  
+  note over db:**[user]**\n\n**id**: uuid\n**step:** EnumStep
+
+note over db:**[EnumStep]**\n\n**1:** first_step\n**2:** second_step\n**3:** third_step\n**4:** finished
+
+  note right of be:Obtém usuário e etapa atual
+end
+
+be->fe:Retorna usuário e etapa atual
+fe->user: Redireciona para step corrente
+
+user->fe:Resposta é submetida
+fe->be:Valida resposta do step\n(userId, step, answer)
+
+group Valida resposta do usuário
+  note over be:[answer] Validate answer
+
+  note right of be:Recebe body (userId, step, answer)
+  
+    note over db:**[answer]**\n\n**step**: EnumStep\n**answer:** string
+
+  note right of be:Valida na tabela de respostas
+end
+
+alt Resposta incorreta
+  be->fe:Retorna erro
+  fe->user:Feedback ao usuário
+else Resposta correta
+  note over be: Atualiza step do usuário
+  be->fe:Retorna nova entidade **user**
+  fe->user:Próxima etapa ou\nfeedback de sucesso final
+end
