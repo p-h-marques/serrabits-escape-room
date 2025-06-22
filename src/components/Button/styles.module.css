@@ -1,0 +1,27 @@
+.button {
+  background: none;
+  border: 1px solid;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary {
+  color: var(--foreground);
+  background-color: var(--primary);
+  border-color: var(--primary);
+
+  &:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+  }
+}
+
+.secondary {
+  color: var(--primary);
+  background-color: transparent;
+  border-color: var(--primary);
+}
