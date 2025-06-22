@@ -1,7 +1,14 @@
+"use client"
+
 import { Button } from "@/components";
+import { useStoredUser } from "@/hooks";
 import styles from "./page.module.css";
 
 export default function Home() {
+  const user = useStoredUser();
+
+  console.log(user)
+
   return (
     <>
       <main className={styles.container}>
