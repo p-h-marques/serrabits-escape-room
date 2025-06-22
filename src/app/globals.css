@@ -1,13 +1,10 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #202124;
+  --foreground: #ffffff;
+  --primary: #A855F7;
+  --blue: #06B6D4;
+  --red: #EF4444;
+  --green: #84CC16;
 }
 
 html,
@@ -22,6 +19,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 * {
@@ -35,8 +34,17 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+h1 {
+  color: var(--primary);
+  font-size: 64px;
+  line-height: 80px;
+}
+
+main {
+  padding: 80px;
+}
+
+p {
+  font-size: 16px;
+  line-height: 32px;
 }
